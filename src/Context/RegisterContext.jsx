@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 export const RegisterContext = createContext();
 export const RegisterContextProvider = ({ children }) => {
   const [name, setName] = React.useState("");
@@ -18,16 +19,16 @@ export const RegisterContextProvider = ({ children }) => {
     setAddress(faddress);
     setPincode(fpincode);
     console.log(faddress, fpincode);
+    if (faddress !== "" && fpincode !== "") {
+      let pvot = {
+        address: faddress,
+        pincode: fpincode,
+        id: uuidv4(),
+      };
+      setData([...data, pvot]);
+    }
   };
-  if (name && age && address && pincode) {
-    let pvot = {
-      name: name,
-      age: age,
-      address: address,
-      pincode: pincode,
-    };
-    setData([...data, pvot]);
-  }
+
   return (
     <RegisterContext.Provider
       value={{ data, name, age, address, pincode, handleData1, handleData2 }}
